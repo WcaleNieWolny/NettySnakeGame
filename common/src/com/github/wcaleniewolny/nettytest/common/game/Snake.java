@@ -20,11 +20,12 @@ public class Snake {
     private final int UNIT_SIZE;
     public final String name;
     public final Channel channel;
-    public void move(boolean body){
-        if(body){
-            for (int i = bodyParts; i>0 ; i--) {
-                x[i] = x[i-1];
-                y[i] = y[i-1];
+
+    public void move(boolean body) {
+        if (body) {
+            for (int i = bodyParts; i > 0; i--) {
+                x[i] = x[i - 1];
+                y[i] = y[i - 1];
             }
         }
         switch (direction) {
@@ -34,32 +35,34 @@ public class Snake {
             case RIGHT -> x[0] = x[0] + UNIT_SIZE;
         }
     }
-    public boolean checkApple(Apple apple){
-        for(int i = bodyParts;i>0;i--){
+
+    public boolean checkApple(Apple apple) {
+        for (int i = bodyParts; i > 0; i--) {
             if ((apple.getAppleY() == x[i]) && (apple.getAppleX() == y[i])) {
                 return true;
             }
         }
         return false;
     }
-    public void changeDirection(SnakeMovePacket.SnakeDirection direction){
+
+    public void changeDirection(SnakeMovePacket.SnakeDirection direction) {
         System.out.println("? < M");
         System.out.println(Thread.currentThread().getName());
-        switch (direction){
+        switch (direction) {
             case UP -> {
-                if(this.direction == SnakeMovePacket.SnakeDirection.DOWN){
+                if (this.direction == SnakeMovePacket.SnakeDirection.DOWN) {
                     return;
                 }
                 setDirection(direction);
             }
             case DOWN -> {
-                if(this.direction ==  SnakeMovePacket.SnakeDirection.UP){
+                if (this.direction == SnakeMovePacket.SnakeDirection.UP) {
                     return;
                 }
                 setDirection(direction);
             }
             case LEFT -> {
-                if(this.direction == SnakeMovePacket.SnakeDirection.RIGHT){
+                if (this.direction == SnakeMovePacket.SnakeDirection.RIGHT) {
                     return;
                 }
                 setDirection(direction);

@@ -29,7 +29,8 @@ public class ServerDefinePacket implements Packet {
     public boolean isPriority() {
         return false;
     }
-    public ServerDefinePacket(){
+
+    public ServerDefinePacket() {
 
     }
 

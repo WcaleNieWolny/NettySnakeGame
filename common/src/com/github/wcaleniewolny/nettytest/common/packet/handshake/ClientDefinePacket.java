@@ -6,11 +6,6 @@ import com.github.wcaleniewolny.nettytest.common.io.NetOutput;
 import com.github.wcaleniewolny.nettytest.common.packet.Packet;
 
 import java.io.IOException;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.interfaces.ECPublicKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.X509EncodedKeySpec;
 
 public class ClientDefinePacket implements Packet {
     private ClientTypeEnum clientTypeEnum;
@@ -42,7 +37,9 @@ public class ClientDefinePacket implements Packet {
         this.token = token;
         this.publicKey = rsaPublic;
     }
-    public ClientDefinePacket(){ }
+
+    public ClientDefinePacket() {
+    }
 
     public ClientTypeEnum getClientTypeEnum() {
         return clientTypeEnum;

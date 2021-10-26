@@ -22,12 +22,12 @@ public class SnakeMoveEvent implements PacketListener {
         System.out.println("Name " + name);
         MainServer.getSnakeGame().getSnakes().forEach(snake -> {
             System.out.println("Snake name: " + snake.name);
-            if(snake.name.equals(name)){
+            if (snake.name.equals(name)) {
                 System.out.println("Found?");
                 MainServer.getSnakeGame().doSynch(() -> {
                     System.out.println("SynC@");
                     for (Snake snake1 : MainServer.getSnakeGame().getSnakes()) {
-                        if(snake1.getName().equals(name)){
+                        if (snake1.getName().equals(name)) {
                             snake1.changeDirection(p.getDirection());
                         }
                         //snake1.setDirection(p.getDirection());

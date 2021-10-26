@@ -6,18 +6,14 @@ import org.slf4j.LoggerFactory;
 
 import javax.crypto.*;
 import javax.crypto.spec.GCMParameterSpec;
-import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.IOException;
 import java.security.*;
 import java.security.interfaces.ECPrivateKey;
-import java.security.interfaces.ECPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
-import java.util.Base64;
 
 public class EncryptionMenager {
     private boolean encyptionEnabled;
@@ -30,8 +26,8 @@ public class EncryptionMenager {
     private byte[] secondIV;
     private byte[] lastIV;
 
-    public byte[] encryptPacket(byte[] packetBytes){
-        if(!enabled()){
+    public byte[] encryptPacket(byte[] packetBytes) {
+        if (!enabled()) {
             return packetBytes;
         }
         // Get Cipher Instance
@@ -58,8 +54,9 @@ public class EncryptionMenager {
         }
         return null;
     }
-    public byte[] decryptPacket(byte[] packetBytes){
-        if(!enabled()){
+
+    public byte[] decryptPacket(byte[] packetBytes) {
+        if (!enabled()) {
             return packetBytes;
         }
         increeseIV();
@@ -92,7 +89,7 @@ public class EncryptionMenager {
         this.salt = salt;
     }
 
-    public void init(byte[] pubicKey, byte[] ivOne, byte[] ivTwo){
+    public void init(byte[] pubicKey, byte[] ivOne, byte[] ivTwo) {
         //Gen aes public key!
         byte[] sharedSecret = deriveSharedSecret(pubicKey, (ECPrivateKey) mineKey.getPrivate());
         assert sharedSecret != null;
@@ -105,10 +102,12 @@ public class EncryptionMenager {
     public boolean enabled() {
         return encyptionEnabled;
     }
-    private void aboardConnection(){
+
+    private void aboardConnection() {
         this.channel.close();
         log.error("Closing connection due to encryption error!");
     }
+
     private SecretKey getKeyFromPassword(String password, String salt) {
 
         SecretKeyFactory factory = null;
@@ -123,7 +122,8 @@ public class EncryptionMenager {
         }
         return null;
     }
-    private byte[] deriveSharedSecret(byte[] otherPublicKey, ECPrivateKey yourPrivateKey){
+
+    private byte[] deriveSharedSecret(byte[] otherPublicKey, ECPrivateKey yourPrivateKey) {
         try {
             final KeyFactory ec = KeyFactory.getInstance("EC");
             final X509EncodedKeySpec keySpec = new X509EncodedKeySpec(otherPublicKey);
@@ -149,6 +149,7 @@ public class EncryptionMenager {
         }
         return null;
     }
+
     private String encodeHexString(byte[] byteArray) {
         StringBuffer hexStringBuffer = new StringBuffer();
         for (int i = 0; i < byteArray.length; i++) {
@@ -156,6 +157,7 @@ public class EncryptionMenager {
         }
         return hexStringBuffer.toString();
     }
+
     private byte[] decodeHexString(String hexString) {
         if (hexString.length() % 2 == 1) {
             throw new IllegalArgumentException(
@@ -168,6 +170,7 @@ public class EncryptionMenager {
         }
         return bytes;
     }
+
     private byte hexToByte(String hexString) {
         int firstDigit = toDigit(hexString.charAt(0));
         int secondDigit = toDigit(hexString.charAt(1));
@@ -176,28 +179,30 @@ public class EncryptionMenager {
 
     private int toDigit(char hexChar) {
         int digit = Character.digit(hexChar, 16);
-        if(digit == -1) {
+        if (digit == -1) {
             throw new IllegalArgumentException(
-                    "Invalid Hexadecimal Character: "+ hexChar);
+                    "Invalid Hexadecimal Character: " + hexChar);
         }
         return digit;
     }
+
     private String byteToHex(byte num) {
         char[] hexDigits = new char[2];
         hexDigits[0] = Character.forDigit((num >> 4) & 0xF, 16);
         hexDigits[1] = Character.forDigit((num & 0xF), 16);
         return new String(hexDigits);
     }
-    private void increeseIV(){
+
+    private void increeseIV() {
         this.lastIV = Arrays.copyOf(firstIV, firstIV.length);
         for (int i = 0; i < firstIV.length; i++) {
-            if(!(firstIV[i] + 1 > 127)){
+            if (!(firstIV[i] + 1 > 127)) {
                 firstIV[i]++;
                 return;
             }
         }
         log.warn("Making IV bigger was impossible!");
-        if(secondIV != null){
+        if (secondIV != null) {
             log.warn("Running IV safety protocol!");
             this.firstIV = secondIV;
             return;
@@ -205,16 +210,18 @@ public class EncryptionMenager {
         log.error("Something just go REALY BAD, abording connection!");
         aboardConnection();
     }
+
     public static byte[] generateIv() {
         byte[] iv = new byte[96];
         new SecureRandom().nextBytes(iv);
         return iv;
     }
-    public PublicKey getPublicKey(){
+
+    public PublicKey getPublicKey() {
         return mineKey.getPublic();
     }
 
-    public void enable(){
+    public void enable() {
         this.encyptionEnabled = true;
     }
 }

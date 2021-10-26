@@ -48,7 +48,7 @@ public class ByteBufferNetOutput implements NetOutput {
 
     @Override
     public void writeVarInt(int i) throws IOException {
-        while((i & ~0x7F) != 0) {
+        while ((i & ~0x7F) != 0) {
             this.writeByte((i & 0x7F) | 0x80);
             i >>>= 7;
         }
@@ -63,7 +63,7 @@ public class ByteBufferNetOutput implements NetOutput {
 
     @Override
     public void writeVarLong(long l) throws IOException {
-        while((l & ~0x7F) != 0) {
+        while ((l & ~0x7F) != 0) {
             this.writeByte((int) (l & 0x7F) | 0x80);
             l >>>= 7;
         }
@@ -98,7 +98,7 @@ public class ByteBufferNetOutput implements NetOutput {
 
     @Override
     public void writeShorts(short[] s, int length) throws IOException {
-        for(int index = 0; index < length; index++) {
+        for (int index = 0; index < length; index++) {
             this.writeShort(s[index]);
         }
     }
@@ -110,7 +110,7 @@ public class ByteBufferNetOutput implements NetOutput {
 
     @Override
     public void writeInts(int[] i, int length) throws IOException {
-        for(int index = 0; index < length; index++) {
+        for (int index = 0; index < length; index++) {
             this.writeInt(i[index]);
         }
     }
@@ -122,19 +122,19 @@ public class ByteBufferNetOutput implements NetOutput {
 
     @Override
     public void writeLongs(long[] l, int length) throws IOException {
-        for(int index = 0; index < length; index++) {
+        for (int index = 0; index < length; index++) {
             this.writeLong(l[index]);
         }
     }
 
     @Override
     public void writeString(String s) throws IOException {
-        if(s == null) {
+        if (s == null) {
             throw new IllegalArgumentException("String cannot be null!");
         }
 
         byte[] bytes = s.getBytes("UTF-8");
-        if(bytes.length > 32767) {
+        if (bytes.length > 32767) {
             throw new IOException("String too big (was " + s.length() + " bytes encoded, max " + 32767 + ")");
         } else {
             this.writeVarInt(bytes.length);

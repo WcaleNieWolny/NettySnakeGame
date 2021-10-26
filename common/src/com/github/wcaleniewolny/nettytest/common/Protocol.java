@@ -21,7 +21,7 @@ public class Protocol {
     private static final Map<Integer, Class<? extends Packet>> incoming = new HashMap<>();
     private static final Map<Class<? extends Packet>, Integer> outgoing = new HashMap<>();
 
-    public static void register(){
+    public static void register() {
         registerPacket(0, MsgPacket.class);
         registerPacket(1, ClientDefinePacket.class);
         registerPacket(2, ServerDefinePacket.class);
@@ -30,6 +30,7 @@ public class Protocol {
         registerPacket(5, SnakeMovePacket.class);
         registerPacket(6, StopGamePacket.class);
     }
+
     public static Packet createIncomingPacket(int id) {
         System.out.println("Crt pck " + id);
         Class<? extends Packet> packet = incoming.get(id);
@@ -39,19 +40,20 @@ public class Protocol {
 
         try {
             Constructor<? extends Packet> constructor = packet.getDeclaredConstructor();
-            if(!constructor.trySetAccessible()) {
+            if (!constructor.trySetAccessible()) {
                 constructor.setAccessible(true);
             }
             System.out.println("CRT SUK");
             return constructor.newInstance();
-        } catch(NoSuchMethodError e) {
+        } catch (NoSuchMethodError e) {
             log.error(new IllegalStateException("Packet \"" + id + ", " + packet.getName() + "\" does not have a no-params constructor for instantiation.").toString());
-        } catch(Exception e) {
+        } catch (Exception e) {
             log.error(new IllegalStateException("Failed to instantiate com.github.wcaleniewolny.NettyTest.packet \"" + id + ", " + packet.getName() + "\".", e).toString());
         }
         return null;
     }
-    public static  void writePacketId(NetOutput output, Class<? extends Packet> c){
+
+    public static void writePacketId(NetOutput output, Class<? extends Packet> c) {
         try {
             int i = outgoing.get(c);
             output.writeVarInt(i);
@@ -59,7 +61,8 @@ public class Protocol {
             e.printStackTrace();
         }
     }
-    public static void registerPacket(Integer integer, Class<? extends Packet> c){
+
+    public static void registerPacket(Integer integer, Class<? extends Packet> c) {
         incoming.put(integer, c);
         outgoing.put(c, integer);
     }

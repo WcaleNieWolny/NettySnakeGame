@@ -1,7 +1,6 @@
 package com.github.wcaleniewolny.nettytest.client.netty;
 
 import com.github.wcaleniewolny.nettytest.client.MainClient;
-import com.sun.tools.javac.Main;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -12,7 +11,7 @@ import java.util.List;
 public class CryptoCodecClient extends ByteToMessageCodec<ByteBuf> {
     @Override
     protected void encode(ChannelHandlerContext ctx, ByteBuf msg, ByteBuf out) throws Exception {
-        if(!MainClient.encryptionMenager.enabled()){
+        if (!MainClient.encryptionMenager.enabled()) {
             out.writeBytes(msg);
             return;
         }
@@ -24,7 +23,7 @@ public class CryptoCodecClient extends ByteToMessageCodec<ByteBuf> {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-        if(!MainClient.encryptionMenager.enabled()){
+        if (!MainClient.encryptionMenager.enabled()) {
             out.add(in.readBytes(in.readableBytes()));
             return;
         }

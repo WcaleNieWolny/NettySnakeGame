@@ -14,11 +14,12 @@ public class NettyServer {
     public NettyServer(int port) {
         this.port = port;
     }
-    public void run(){
+
+    public void run() {
         Thread thread = new Thread(() -> {
             EventLoopGroup boosGroup = new NioEventLoopGroup();
             EventLoopGroup workerGroup = new NioEventLoopGroup();
-            try{
+            try {
                 ServerBootstrap bootstrap = new ServerBootstrap()
                         .group(workerGroup)
                         .channel(NioServerSocketChannel.class)
@@ -26,7 +27,7 @@ public class NettyServer {
                 bootstrap.bind(port).sync().channel().closeFuture().sync();
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }finally {
+            } finally {
                 boosGroup.shutdownGracefully();
                 workerGroup.shutdownGracefully();
             }

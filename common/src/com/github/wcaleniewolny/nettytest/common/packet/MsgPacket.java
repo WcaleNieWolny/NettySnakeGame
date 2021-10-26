@@ -5,16 +5,19 @@ import com.github.wcaleniewolny.nettytest.common.io.NetOutput;
 
 import java.io.IOException;
 
-public class MsgPacket implements Packet{
+public class MsgPacket implements Packet {
     private String msg;
 
     public String getMsg() {
         return msg;
     }
-    public MsgPacket(String msg){
+
+    public MsgPacket(String msg) {
         this.msg = msg;
     }
-    public MsgPacket(){}
+
+    public MsgPacket() {
+    }
 
     @Override
     public void read(NetInput in) throws IOException {

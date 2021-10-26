@@ -1,18 +1,19 @@
 package com.github.wcaleniewolny.nettytest.common.packet.server;
 
 import com.github.wcaleniewolny.nettytest.common.game.Apple;
-import com.github.wcaleniewolny.nettytest.common.game.Snake;
 import com.github.wcaleniewolny.nettytest.common.game.SnakePosition;
 import com.github.wcaleniewolny.nettytest.common.io.NetInput;
 import com.github.wcaleniewolny.nettytest.common.io.NetOutput;
 import com.github.wcaleniewolny.nettytest.common.packet.Packet;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 @NoArgsConstructor
 @Slf4j
@@ -35,7 +36,7 @@ public class GamePanelPacket implements Packet {
         this.apples = apples;
     }
 
-    public static GamePanelPacket nullPacket(){
+    public static GamePanelPacket nullPacket() {
         return new GamePanelPacket(new HashMap<>(), new ArrayList<>());
     }
 
@@ -101,6 +102,7 @@ public class GamePanelPacket implements Packet {
     public boolean isPriority() {
         return false;
     }
+
     public static byte[] trimByte(byte[] bytes) {
         int i = bytes.length - 1;
         while (i >= 0 && bytes[i] == 0) {
@@ -109,6 +111,7 @@ public class GamePanelPacket implements Packet {
 
         return Arrays.copyOf(bytes, i + 1);
     }
+
     public static int[] trimInt(int[] bytes) {
         int i = bytes.length - 1;
         while (i >= 0 && bytes[i] == 0) {

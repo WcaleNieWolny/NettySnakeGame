@@ -1,6 +1,5 @@
 package com.github.wcaleniewolny.nettytest.common.packet.client;
 
-import com.github.wcaleniewolny.nettytest.common.game.Snake;
 import com.github.wcaleniewolny.nettytest.common.io.NetInput;
 import com.github.wcaleniewolny.nettytest.common.io.NetOutput;
 import com.github.wcaleniewolny.nettytest.common.packet.Packet;
@@ -36,7 +35,8 @@ public class SnakeMovePacket implements Packet {
     public boolean isPriority() {
         return false;
     }
-    public enum SnakeDirection{
+
+    public enum SnakeDirection {
         RIGHT('R'),
         LEFT('L'),
         UP('U'),
@@ -44,7 +44,7 @@ public class SnakeMovePacket implements Packet {
 
         char direction;
 
-        SnakeDirection(char direction){
+        SnakeDirection(char direction) {
             this.direction = direction;
         }
 
@@ -52,18 +52,18 @@ public class SnakeMovePacket implements Packet {
             return direction;
         }
 
-        public static SnakeDirection getFromChar(char c){
-            switch (c){
+        public static SnakeDirection getFromChar(char c) {
+            switch (c) {
                 case 'R' -> {
                     return RIGHT;
                 }
-                case 'L' ->{
+                case 'L' -> {
                     return LEFT;
                 }
                 case 'U' -> {
                     return UP;
                 }
-                case 'D' ->{
+                case 'D' -> {
                     return DOWN;
                 }
             }

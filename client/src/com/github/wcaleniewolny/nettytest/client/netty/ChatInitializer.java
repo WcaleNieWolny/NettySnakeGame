@@ -12,7 +12,7 @@ public class ChatInitializer extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel socketChannel) throws Exception {
         ChannelPipeline pipeline = socketChannel.pipeline();
-        pipeline.addLast("framer", new LengthFieldBasedFrameDecoder(Short.MAX_VALUE,0,2,0,2));
+        pipeline.addLast("framer", new LengthFieldBasedFrameDecoder(Short.MAX_VALUE, 0, 2, 0, 2));
         pipeline.addLast("framer-prepender", new LengthFieldPrepender(2, false));
         pipeline.addLast("encryption", new CryptoCodecClient());
         pipeline.addLast("codec", new TcpPacketCodec());

@@ -4,7 +4,6 @@ import com.github.wcaleniewolny.nettytest.common.PacketUtils;
 import com.github.wcaleniewolny.nettytest.common.crypto.EncryptionMenager;
 import com.github.wcaleniewolny.nettytest.common.events.EventMenager;
 import com.github.wcaleniewolny.nettytest.common.events.PacketListener;
-import com.github.wcaleniewolny.nettytest.common.packet.MsgPacket;
 import com.github.wcaleniewolny.nettytest.common.packet.Packet;
 import com.github.wcaleniewolny.nettytest.common.packet.handshake.ClientDefinePacket;
 import com.github.wcaleniewolny.nettytest.common.packet.handshake.ServerDefinePacket;
@@ -18,7 +17,7 @@ public class ClientDefineEvent implements PacketListener {
     @Override
     public void recivePacket(Packet packet, Channel channel) {
         EventMenager.log.info("Got client define packet!, {}", ((ClientDefinePacket) packet).getToken());
-        if(!MainServer.getConnectionList().containsKey(channel.id().asLongText())){
+        if (!MainServer.getConnectionList().containsKey(channel.id().asLongText())) {
             EventMenager.log.info("Connection list do not have that channel id???");
         }
         ClientConnection clientConnection = MainServer.getConnectionList().get(channel.id().asLongText());

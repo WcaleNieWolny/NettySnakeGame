@@ -21,20 +21,22 @@ import lombok.Setter;
 
 import java.security.KeyPair;
 import java.util.Random;
-import java.util.UUID;
 
 public class MainClient {
     private static NettyClient client;
     @Getter
     @Setter
     private static GamePanel gamePanel;
-    public static NettyClient getClient(){
+
+    public static NettyClient getClient() {
         return client;
     }
+
     public static EncryptionMenager encryptionMenager;
     private static EventMenager menager;
     public static String token;
-    @Getter public static GameFrame frame;
+    @Getter
+    public static GameFrame frame;
 
     private static void setClient(NettyClient client) {
         MainClient.client = client;

@@ -1,12 +1,6 @@
 package com.github.wcaleniewolny.nettytest.server;
 
 import com.github.wcaleniewolny.nettytest.common.Protocol;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-
 import com.github.wcaleniewolny.nettytest.common.events.EventMenager;
 import com.github.wcaleniewolny.nettytest.common.events.MsgEvent;
 import com.github.wcaleniewolny.nettytest.common.packet.MsgPacket;
@@ -17,8 +11,12 @@ import com.github.wcaleniewolny.nettytest.server.events.SnakeMoveEvent;
 import com.github.wcaleniewolny.nettytest.server.game.SnakeGame;
 import lombok.Getter;
 import org.slf4j.Logger;
-
 import org.slf4j.LoggerFactory;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashMap;
 
 public class MainServer {
     private static EventMenager menager;
@@ -28,14 +26,15 @@ public class MainServer {
     private final HashMap<String, String> ChannelNameToSnakeName = new HashMap<>();
     @Getter
     private static SnakeGame snakeGame;
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         Protocol.register();
         menager = new EventMenager();
         menager.registerEvent(new MsgEvent(), MsgPacket.class);
         menager.registerEvent(new ClientDefineEvent(), ClientDefinePacket.class);
         menager.registerEvent(new SnakeMoveEvent(), SnakeMovePacket.class);
         logger = LoggerFactory.getLogger("SERVER");
-        snakeGame = new SnakeGame(600, 600, 25, (600 * 600)/25, 800);
+        snakeGame = new SnakeGame(600, 600, 25, (600 * 600) / 25, 800);
         snakeGame.init();
         new NettyServer(8000).run();
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -46,7 +45,7 @@ public class MainServer {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            switch (input){
+            switch (input) {
                 case "s" -> {
                     System.out.println("GO GO GO !");
                     snakeGame.startGame();
@@ -60,7 +59,8 @@ public class MainServer {
             }
         }
     }
-    public static EventMenager getMenager(){
+
+    public static EventMenager getMenager() {
         return menager;
     }
 

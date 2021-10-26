@@ -12,12 +12,12 @@ public class CryptoCodecServer extends ByteToMessageCodec<ByteBuf> {
     @Override
     protected void encode(ChannelHandlerContext ctx, ByteBuf msg, ByteBuf out) throws Exception {
         ClientConnection clientConnection = MainServer.getConnectionList().get(ctx.channel().id().asLongText());
-        if(clientConnection == null){
+        if (clientConnection == null) {
             out.writeBytes(msg);
             System.out.println("con = null");
             return;
         }
-        if(clientConnection.getEncryptionMenager() == null){
+        if (clientConnection.getEncryptionMenager() == null) {
             out.writeBytes(msg);
             System.out.println("Mg = null");
             return;
@@ -33,12 +33,12 @@ public class CryptoCodecServer extends ByteToMessageCodec<ByteBuf> {
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
         System.out.println("DDDEECODE");
         ClientConnection clientConnection = MainServer.getConnectionList().get(ctx.channel().id().asLongText());
-        if(clientConnection == null){
+        if (clientConnection == null) {
             out.add(in.readBytes(in.readableBytes()));
             System.out.println("CON = null");
             return;
         }
-        if(clientConnection.getEncryptionMenager() == null){
+        if (clientConnection.getEncryptionMenager() == null) {
             out.add(in.readBytes(in.readableBytes()));
             System.out.println("Mg = null");
             return;
