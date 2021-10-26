@@ -1,0 +1,5 @@
+https://github.com/akhawaja/java-ecdhe-sample/blob/master/src/main/java/com/amirkhawaja/ecdhe/EcdhCommandLineRunner.java
+https://github.com/akhawaja/java-ecdhe-sample/blob/1f4546d965cb9daad4076e39bcf79896392da870/src/main/java/com/amirkhawaja/ecdhe/service/KeyService.java#L39
+https://www.baeldung.com/java-aes-encryption-decryption
+https://www.baeldung.com/java-byte-arrays-hex-strings
+http://www.java2s.com/example/java-utility-method/array-trim/trim-byte-bytes-d07eb.html
